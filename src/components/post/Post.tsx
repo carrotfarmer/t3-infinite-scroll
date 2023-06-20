@@ -29,7 +29,7 @@ export const Post: React.FC<PostProps> = ({ post }) => {
             <div className="flex items-center space-x-1">
               <Avatar className="w-8 h-8">
                 <AvatarImage src={post.author.image as string} />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>WUT</AvatarFallback>
               </Avatar>
               <p className="text-sm font-semibold">{post.author.name}</p>
             </div>
