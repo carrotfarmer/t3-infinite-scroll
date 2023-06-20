@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { api } from "~/utils/api";
 import { Button } from "../ui/button";
-import { Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 
 interface PostProps {
@@ -52,6 +52,17 @@ export const Post: React.FC<PostProps> = ({ post }) => {
                 }}
               >
                 <Trash2 size={16} />
+              </Button>
+
+
+              <Button
+                variant="primaryOutline"
+                size="sm"
+                onClick={() => {
+                  console.log("todo")
+                }}
+              >
+                <Edit size={16} />
               </Button>
             </div>
           </CardFooter>
