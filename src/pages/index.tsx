@@ -1,6 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
+import { CreatePost } from "~/components/post/CreatePost";
 import { Button } from "~/components/ui/button";
 import { api } from "~/utils/api";
 
@@ -30,9 +31,15 @@ export default function Home() {
         </div>
 
         {sessionData && (
+          <>
           <p className="flex justify-center leading-7 [&:not(:first-child)]:mt-6">
             Signed in User: <span className="pl-1 font-bold">{sessionData?.user.name}</span>
           </p>
+
+          <div className="flex justify-center pt-5 w-full">
+          <CreatePost />
+          </div>
+          </>
         )}
       </main>
     </>
