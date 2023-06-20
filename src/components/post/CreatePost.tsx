@@ -1,30 +1,17 @@
 import React from "react";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
+
 import { api } from "~/utils/api";
 
-const formSchema = z
-  .object({
-    postContent: z
-      .string()
-      .min(1, { message: "Post content is required" })
-      .max(75, { message: "Post content must be less than 75 characters" }),
-  })
-  .required();
+import { type FormData, formSchema } from "~/types";
 
-type FormData = z.infer<typeof formSchema>;
-
-// eslint-disable-next-line
-interface CreatePostProps {}
-
-export const CreatePost: React.FC<CreatePostProps> = ({}) => {
+export const CreatePost: React.FC = ({}) => {
   const {
     register,
     handleSubmit,
