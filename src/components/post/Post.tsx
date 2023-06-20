@@ -1,6 +1,7 @@
 import React from "react";
 import type { IPost } from "~/types";
-import { Card, CardContent, CardFooter } from "../ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 interface PostProps {
   post: IPost;
@@ -9,21 +10,21 @@ interface PostProps {
 export const Post: React.FC<PostProps> = ({ post }) => {
   return (
     <Card>
-      <CardContent>{post.content}</CardContent>
-
-      <CardFooter>
+      <CardHeader>
         <div className="flex items-center space-x-2">
           <div className="flex items-center space-x-1">
-            <div className="w-4 h-4 rounded-full bg-gray-500">
-              <img src={post.author.image as string} alt="" />
-            </div>
+            <Avatar className="w-8 h-8">
+              <AvatarImage src={post.author.image as string} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
             <p className="text-sm font-semibold">{post.author.name}</p>
           </div>
           <p className="text-sm text-muted-foreground">
             {new Date(post.createdAt).toLocaleDateString()}
           </p>
         </div>
-      </CardFooter>
+      </CardHeader>
+      <CardContent>{post.content}</CardContent>
     </Card>
   );
 };
