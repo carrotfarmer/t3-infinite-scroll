@@ -45,8 +45,7 @@ export const Post: React.FC<PostProps> = ({ post }) => {
           <CardFooter>
             <div className="flex items-center space-x-2">
               <Button
-                variant="outline"
-                className="text-red-500 border-red-500 hover:bg-red-100 hover:text-red-500"
+                variant="destructiveOutline"
                 size="sm"
                 onClick={() => {
                   deletePost({ postId: post.id });
