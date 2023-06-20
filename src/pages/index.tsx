@@ -2,11 +2,24 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { CreatePost } from "~/components/post/CreatePost";
+import { Post } from "~/components/post/Post";
 import { Button } from "~/components/ui/button";
 import { api } from "~/utils/api";
 
 export default function Home() {
   const { data: sessionData } = useSession();
+
+  const postsQuery = api.post.getInfinitePosts.useInfiniteQuery(
+    {
+      limit: 10,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      // initialCursor: 1, // <-- optional you can pass an initialCursor
+    }
+  );
+
+  const posts = postsQuery.data?.pages.flatMap((page) => page.posts) ?? [];
 
   return (
     <>
@@ -32,15 +45,33 @@ export default function Home() {
 
         {sessionData && (
           <>
-          <p className="flex justify-center leading-7 [&:not(:first-child)]:mt-6">
-            Signed in User: <span className="pl-1 font-bold">{sessionData?.user.name}</span>
-          </p>
+            <p className="flex justify-center leading-7 [&:not(:first-child)]:mt-6">
+              Signed in User: <span className="pl-1 font-bold">{sessionData?.user.name}</span>
+            </p>
 
-          <div className="flex justify-center pt-5 w-full">
-          <CreatePost />
-          </div>
+            <div className="flex justify-center pt-5 w-full">
+              <CreatePost />
+            </div>
           </>
         )}
+
+        <div className="flex justify-center pt-5">
+          <div className="w-full max-w-xl">
+            {posts.map((post) => (
+              <Post key={post.id} post={post} />
+            ))}
+            {postsQuery.hasNextPage && (
+              <div className="flex justify-center pt-5">
+                <Button
+                  onClick={() => void postsQuery.fetchNextPage()}
+                  disabled={postsQuery.isFetchingNextPage}
+                >
+                  {postsQuery.isFetchingNextPage ? "loading..." : "load more"}
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
       </main>
     </>
   );

@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
+import { api } from "~/utils/api";
 
 const formSchema = z
   .object({
@@ -36,9 +37,16 @@ export const CreatePost: React.FC<CreatePostProps> = ({}) => {
     },
   });
 
+  const utils = api.useContext();
+  const { mutate: createPost } = api.post.createPost.useMutation({
+    onSettled: async () => {
+      await utils.post.invalidate()
+      reset();
+    }
+  })
+
   const onSubmit = (data: FormData) => {
-    console.log(data.postContent);
-    reset();
+    createPost({ content: data.postContent })
   };
 
   return (
