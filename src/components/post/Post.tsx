@@ -15,7 +15,6 @@ import {
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
-import { Label } from "../ui/label"
 
 import { Edit, Trash2 } from "lucide-react";
 
@@ -110,10 +109,9 @@ export const Post: React.FC<PostProps> = ({ post }) => {
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <AlertDialogHeader>edit post</AlertDialogHeader>
 
-                    <AlertDialogDescription>
+                    <AlertDialogDescription className="pt-2">
                       <div className="mx-auto max-w-xl space-y-8">
                         <div className="space-y-1">
-                          <Label htmlFor="name">post content</Label>
                           <Textarea
                             id="name"
                             defaultValue={post.content as string}
